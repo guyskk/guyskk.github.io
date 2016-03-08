@@ -1,0 +1,15 @@
+<aside class="logo">
+
+	{% if page.url == '/index.html' or page.url == '/' %}
+		{% assign link = '/about' %}
+		{% assign prompt = '关于我' %}
+	{% else %}
+		{% assign link = '/' %}
+		{% assign prompt = '返回主页' %}
+	{% endif %}
+
+	<a href="{{ link | prepend: site.baseurl }}">
+	</a>
+	<span class="logo-prompt">{{ prompt }}</span>
+
+</aside>
