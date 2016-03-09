@@ -1,6 +1,7 @@
 # Site Info
 title:              "KkBlog"
 description:        "KK的博客"
+encoding:           "utf-8"
 
 # Author Info
 author_name:        "guyskk"
@@ -13,7 +14,7 @@ permalink:          /notes/:title # Post permalink
 timezone:           Asia/Shanghai # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 # Site Build
-highlighter:        pygments
+highlighter:        rouge
 #markdown:           redcarpet
 #redcarpet:
 #    extensions:     ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data", "highlight", "footnotes"]
