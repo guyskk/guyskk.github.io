@@ -1,5 +1,5 @@
 ---
-title: 不要copy代码 - python尾逗号导致的bug
+title: 不要Copy代码 - Python尾逗号导致的Bug
 ---
 
 

@@ -1,5 +1,5 @@
 ---
-title: 使用 ftp 在 windows 与 linux 虚拟机之间传输文件
+title: 使用FTP在Windows与Linux虚拟机之间传输文件
 ---
 
 
