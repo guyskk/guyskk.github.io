@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+	<section data-markdown>
+		<script type="text/template">
+		</script>
+	</section>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section data-markdown>
+				<script type="text/template">
+					## 使用Docker部署Web项目
+				</script>
+			</section>
+			
+			<section>
+ 				<section data-markdown>
+					<script type="text/template">
+						### 从哪里学？
+						
+						- [Docker — 从入门到实践](https://www.gitbook.com/book/yeasy/docker_practice/details)
+						- [docker-best-practices](https://github.com/FuriKuri/docker-best-practices)
+						- [Docker最佳实践](https://github.com/kxxoling/blog/blob/master/sa/docker-best-practice.md)
+						- [项目及代码部署规范](https://github.com/ncuhome/backend-guide/blob/master/project-and-deploy.md#部署规范)
+						- [使用Docker构建高效Web开发环境](http://www.kkblog.me/notes/使用Docker构建高效Web开发环境)
+						- [awesome-docker](https://github.com/veggiemonk/awesome-docker)
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						### 最简单的例子
+						
+						```bash
+						docker pull alexwhen/docker-2048
+						docker run --name 2048 -d -p 8080:80 alexwhen/docker-2048
+						```
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						### 学习要点
+						
+						- 配置镜像加速
+						- 阅读Docker最佳实践
+						- 阅读官方文档
+						- 动手实践
+					</script>
+				</section>
+			</section>
+			
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### Nginx
+						
+						Nginx是一款面向性能设计的HTTP服务器，相较于Apache、lighttpd具有占有内存少，稳定性高等优势。
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						### 用Docker运行
+						
+						https://hub.docker.com/_/nginx/
+						
+						```
+						docker pull nginx:alpine
+						docker run -ti -p 8080:80 nginx:alpine /bin/sh
+						```
+					</script>
+				</section>
+								
+				<section data-markdown>
+					<script type="text/template">
+						Nginx模块非常多，只需掌握基本用法即可
+						
+						server, location, rewrite, proxy_pass
+						
+						- [nginx配置location总结及rewrite规则写法](http://seanlook.com/2015/05/17/nginx-location-rewrite/)
+						- [Gunicorn Deployment](http://gunicorn.org/#deployment)
+						- [官方文档，随用随查](https://nginx.org/en/docs/)
+						- 实践是最好的老师
+					</script>
+				</section>
+			</section>
+			
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### Python WSGI HTTP Server
+
+						[uWSGI](http://uwsgi-docs-cn.readthedocs.io/zh_CN/latest/)
+						
+						vs
+						
+						[Gunicorn](http://gunicorn.org/)
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						### 待测代码
+						
+						```
+						import time
+
+						from flask import Flask
+
+						app = Flask(__name__)
+
+
+						@app.route('/')
+						def index():
+						    time.sleep(0.1)
+						    return 'Hello World'
+
+
+						if __name__ == '__main__':
+						    app.run(host='0.0.0.0')
+						```
+					</script>
+				</section>
+								
+				<section data-markdown>
+					<script type="text/template">
+						### 运行方式
+
+						```bash
+						# 直接运行
+						python app.py
+						
+						# Gunicorn + gevent
+						gunicorn --bind :5000 --workers 5 --worker-class gevent --worker-connections 1000 app:app
+						gunicorn --bind :5000 --workers 5 --worker-class gevent --worker-connections 100 app:app
+						# Gunicorn
+						gunicorn --bind :5000 --workers 5 app:app
+
+						# uWSGI + gevent
+						uwsgi --http :5000 --master --processes 5 --disable-logging --gevent 1000 --gevent-monkey-patch --wsgi-file app.py --callable app
+						uwsgi --http :5000 --master --processes 5 --disable-logging --gevent 100 --gevent-monkey-patch --wsgi-file app.py --callable app
+						# uWSGI
+						uwsgi --http :5000 --master --processes 5 --disable-logging --wsgi-file app.py --callable app
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 性能测试
+
+						```bash
+						ab -c 500 -n 10000 http://127.0.0.1:5000/
+						```
+						
+						运行方式                | QPS       | 响应时间 
+						---------------------- | --------- | ----------------
+						python app.py          | 无响应
+						Gunicorn + gevent*1000 | 2575.98   | 191.205
+						Gunicorn + gevent*100  | 2614.24   | 192.524
+						Gunicorn               | 无响应
+						uWSGI + gevent*1000    | 3042.72   | 164.326
+						uWSGI + gevent*100     | 2746.88   | 182.024
+						uWSGI                  | 无响应
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						### Gevent是什么？
+						
+						轻量级线程
+						
+						[Gevent程序员指南](http://xlambda.com/gevent-tutorial/)
+					</script>
+				</section>
+			</section>
+			
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### Docker Compose
+						
+						运行多容器应用
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						请求 -> Nginx -> WSGI -> 缓存 -> 数据库
+						
+						- 前端页面，Nginx直接处理
+						- 后端API，WSGI处理
+						- 可能需要做缓存
+						- 可能还有数据库
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						使用Docker Compose一键部署
+						
+						```
+						# docker-compose.yml
+						version: '2'
+						services:
+							A: 定义A服务
+							B: 定义B服务
+							...
+						```
+						
+						```
+						# 一行命令部署
+						docker-compose up
+						```
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### 配置开机自启
+						
+						restart: always
+						
+						https://github.com/ncuhome/onpremise/blob/master/docker-compose.yml
+					</script>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						### 数据持久化
+						
+						[深入理解Docker Volume](http://dockone.io/article/128)
+						
+						- 在容器和宿主机之间共享文件
+						- 容器销毁后数据依旧保存在宿主机上
+						- 代码也可以通过Volume挂载到容器上，这样修改代码之后无需重新构建镜像
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### 容器间通信
+						
+						https://docs.docker.com/compose/networking/
+						
+						- Docker Compose自动创建网络
+						- 自带DNS，通过服务名称访问其他服务
+						- 自带负载均衡，一个服务可以运行多个实例
+					</script>
+				</section>
+			</section>
+
+			<section data-markdown>
+				<script type="text/template">
+					#### Thank you~
+				</script>
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info https://github.com/hakimel/reveal.js#configuration
+		Reveal.initialize({
+			history: true,
+
+			// More info https://github.com/hakimel/reveal.js#dependencies
+			dependencies: [{
+				src: 'plugin/markdown/marked.js'
+			}, {
+				src: 'plugin/markdown/markdown.js'
+			}, {
+				src: 'plugin/notes/notes.js',
+				async: true
+			}, {
+				src: 'plugin/highlight/highlight.js',
+				async: true,
+				callback: function() {
+					hljs.initHighlightingOnLoad();
+				}
+			}]
+		});
+	</script>
+</body>
+
+</html>
