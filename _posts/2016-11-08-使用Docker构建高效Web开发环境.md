@@ -65,16 +65,13 @@ DaoCloud传送门: [https://www.daocloud.io/mirror](https://www.daocloud.io/mirr
 
 命令行使用，`-i`参数: 
 
-
     pip install -r requires.txt -i https://pypi.douban.com/simple
 
 
 全局配置，编辑 `~/.config/pip/pip.conf` 文件:
 
-    ini
     [global]
     index-url = https://pypi.douban.com/simple
-
 
 
 ## npm镜像加速
