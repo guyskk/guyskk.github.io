@@ -1,4 +1,6 @@
---- layout: null ---
+---
+layout: null
+---
 
 <?xml version="1.0" encoding="utf-8" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -6,9 +8,9 @@
   <title>{{ site.title | xml_escape }}</title>
   <subtitle>{{ site.description | xml_escape }}</subtitle>
   <link href="{{ site.baseurl }}/" rel="alternate"/>
-  <link /feed.xml" }}" href="{{ site.baseurl | append: " rel="self"/>
-  <rights>Copyright @
-    {{ site.time | date: '%Y' }},
+  <link href="{{ site.baseurl | append: '/feed.xml' }}" rel="self"/>
+  <rights>Copyright ©
+    2015-{{ site.time | date: '%Y' }},
     {{ site.author_name | xml_escape }}</rights>
   <icon>{{ site.baseurl }}/assets/favicon.png</icon>
 
@@ -31,7 +33,7 @@
   <entry>
     <title type="html">{{ post.title | xml_escape }}</title>
     <id>{{ post.url | prepend: site.baseurl }}</id>
-    <updated>{{ post.updated | date_to_xmlschema }}</updated>
+    <updated>{{ post.date | date_to_xmlschema }}</updated>
     <published>{{ post.path | truncate: 20 | replace: "...", "" | replace: "_posts/", "" }}T10:00:00+02:00</published>
     <content type="html" xml:lang="en">
       <![CDATA[{{ content }}]]>
