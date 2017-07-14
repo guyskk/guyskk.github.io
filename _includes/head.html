@@ -8,16 +8,23 @@
 	<title>{{ site.title }}</title>
 {% endif %}
 
+<meta name="application-name" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+<meta name="theme-color" content="#007b8b">
+<meta name="mobile-web-app-capable" content=yes>
+<meta name="msapplication-starturl" content="http://www.kkblog.me">
+<meta name="msapplication-navbutton-color" content="#007b8b">
+<meta name="apple-mobile-web-app-capable" content=yes>
+<meta name="apple-mobile-web-app-title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@{{ site.twitter_username }}" />
 <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
 <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 200 }}{% else %}{{ site.description }}{% endif %}">
 
-<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-
 <link rel="icon" href="{{ site.baseurl }}/assets/favicon.png">
 <link rel="apple-touch-icon" href="{{ site.baseurl }}/assets/touch-icon.png">
-<!--<link rel="stylesheet" href="//code.cdn.mozilla.net/fonts/fira.css">-->
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/core.css">
 <link rel="canonical" href="{{ page.url | prepend: site.baseurl }}">
 <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.baseurl }}/feed.xml" />
