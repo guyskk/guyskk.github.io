@@ -1,12 +1,12 @@
 # Site Info
 title:              "KkBlog"
-description:        "KK的博客"
+description:        "KK(guyskk)的博客"
 encoding:           "utf-8"
 
 # Author Info
 author_name:        "guyskk"
-author_email:       guyskk@qq.com
-twitter_username:   guyskk
+author_email:       "guyskk@qq.com"
+twitter_username:   "__guyskk__"
 
 # Site Settings
 baseurl:            "" # Base URL must end WITHOUT a slash, default: ""
@@ -15,10 +15,6 @@ timezone:           Asia/Shanghai # https://en.wikipedia.org/wiki/List_of_tz_dat
 
 # Site Build
 highlighter:        rouge
-#markdown:           redcarpet
-#redcarpet:
-#    extensions:     ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data", "highlight", "footnotes"]
-markdown:           kramdown
 kramdown:
     input:          GFM
     hard_wrap: false
@@ -28,7 +24,7 @@ sass:
 # Other Params
 include:            [ "robots.txt" ]
 exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile" ]
-gems:
+plugins:
   - jekyll-sitemap
 
 compress_html:
