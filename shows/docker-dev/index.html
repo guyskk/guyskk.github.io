@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Docker开发环境</title>
+
+		<link href="https://cdn.bootcss.com/reveal.js/3.5.0/css/reveal.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/reveal.js/3.5.0/css/theme/black.min.css" rel="stylesheet">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link href="https://cdn.bootcss.com/reveal.js/3.5.0/lib/css/zenburn.min.css" rel="stylesheet">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'https://cdn.bootcss.com/reveal.js/3.5.0/css/print/pdf.css' : 'https://cdn.bootcss.com/reveal.js/3.5.0/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+        <style media="screen">
+            .reveal code{
+                font-size: 27px;
+				line-height: 1.33;
+            }
+        </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+
+
+
+
+
+
+
+
+<section data-markdown>
+<textarea data-template>
+## Docker <span style="color:red;">开发</span> 环境
+
+</textarea>
+</section>
+
+
+
+<section>
+
+<section data-markdown>
+<textarea data-template>
+## Docker的特点
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+## 隔离
+
+基于 Linux 内核的 cgroup，namespace，以及 AUFS 类的 Union FS 等技术，
+对进程进行封装隔离，属于操作系统层面的虚拟化技术。
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+## 轻量
+
+容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+因此容器要比传统虚拟机更为轻便！
+</textarea>
+</section>
+
+</section>
+
+
+
+<section>
+
+<section data-markdown>
+<textarea data-template>
+## Dockerfile
+
+定制镜像
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+```dockerfile
+FROM python:3.6
+RUN apt-get update && \
+    apt-get install -y libmemcached-dev
+COPY requires.txt /tmp/
+RUN pip install -r /tmp/requires.txt
+VOLUME /project
+WORKDIR /project
+EXPOSE 80
+CMD ["gunicorn", "manage:app"]
+```
+</textarea>
+</section>
+
+</section>
+
+
+
+
+<section>
+
+<section data-markdown>
+<textarea data-template>
+## Docker基本命令
+
+```bash
+docker pull {IMAGE}
+docker run -p {HOST_PORT}:{CONTAINER_PORT} {IMAGE}
+...
+```
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+## 玩一把[2048](http://127.0.0.1:8080)压压惊
+
+```bash
+docker run -p 8080:80 alexwhen/docker-2048
+```
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+## 重要的技巧-Docker镜像加速
+
+刚开始使用Docker时最烦的就是下载镜像
+
+太！慢！了！
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+DaoCloud和阿里云都提供免费的镜像加速服务
+
+- DaoCloud传送门: https://www.daocloud.io/mirror
+- 阿里云传送门: https://cr.console.aliyun.com
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+Docker 版本在 1.12 或更高
+
+创建或修改 `/etc/docker/daemon.json` 文件:
+
+```json
+{
+    "registry-mirrors": [
+        "加速地址"
+    ]
+}
+```
+
+</textarea>
+</section>
+
+</section>
+
+
+
+
+<section>
+
+<section data-markdown>
+<textarea data-template>
+## Docker Compose
+
+定义和运行多个 Docker 容器的应用
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+## 一个项目多个容器
+
+- Python
+- MySQL(开发数据库，测试数据库)
+- Redis
+- ...
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+```yml
+version: '2'
+services:
+    mysql-dev:
+        image: mysql:5.7
+        volumes:
+            - ./data/mysql-dev:/var/lib/mysql
+            - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+    mysql-test:
+        image: mysql:5.7
+        volumes:
+            - /tmp/project/data/mysql-test:/var/lib/mysql
+            - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: ['/bin/bash', '-c', 'while true; do sleep 1; done']
+        volumes:
+            - .:/project
+            - .cache:/root/.cache
+            - ~/.pip/pip.conf:/root/.pip/pip.conf
+        ports:
+            - "5000:5000"
+        environment:
+            - FLASK_CONFIG_NAME=development
+```
+</textarea>
+</section>
+
+
+<section data-markdown>
+<textarea data-template>
+## 容器间互相访问
+
+内置DNS，直接使用容器名称访问
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+```python
+SQLALCHEMY_DATABASE_URI = \
+    "mysql+pymysql://root:root@mysql-dev/project"
+```
+</textarea>
+</section>
+
+
+<section data-markdown>
+<textarea data-template>
+## 进入某个容器
+
+```python
+docker-compose exec {CONTAINER} /bin/bash
+```
+
+PS：效果和 Virtualenv(Python虚拟环境) 有点像
+</textarea>
+</section>
+
+</section>
+
+
+
+<section>
+<section data-markdown>
+<textarea data-template>
+## 测试环境
+
+```yml
+volumes:
+	- /tmp/project/data/mysql-test:/var/lib/mysql
+```
+
+挂载到 tmpfs 上，提高测试速度(I/O)
+</textarea>
+</section>
+
+
+<section data-markdown>
+<textarea data-template>
+## 测试执行流程
+
+```python
+@pytest.fixture
+def app():
+    app = create_app('testing')
+    db.drop_all(app=app)
+    db.create_all(app=app)
+    with app.app_context():
+        init_db()
+    yield app
+    db.drop_all(app=app)
+```
+</textarea>
+</section>
+
+</section>
+
+
+
+<section>
+
+<section data-markdown>
+<textarea data-template>
+## 资源
+
+- https://github.com/veggiemonk/awesome-docker
+- https://github.com/hangyan/docker-resources
+</textarea>
+</section>
+
+
+<section data-markdown>
+<textarea data-template>
+## EOF
+
+～～～谢谢观看～～～
+</textarea>
+</section>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</div>
+		</div>
+
+		<script src="https://cdn.bootcss.com/reveal.js/3.5.0/lib/js/head.min.js"></script>
+		<script src="https://cdn.bootcss.com/reveal.js/3.5.0/js/reveal.min.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'https://cdn.bootcss.com/reveal.js/3.5.0/plugin/markdown/marked.js' },
+					{ src: 'https://cdn.bootcss.com/reveal.js/3.5.0/plugin/markdown/markdown.js' },
+					{ src: 'https://cdn.bootcss.com/reveal.js/3.5.0/plugin/notes/notes.js', async: true },
+					{ src: 'https://cdn.bootcss.com/reveal.js/3.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
