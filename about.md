@@ -21,4 +21,4 @@ Hi，我是黄康德，网络 ID 是 guyskk。
 - Email: guyskk@qq.com
 - Github: [https://github.com/guyskk](https://github.com/guyskk)  
 - V2EX: [http://www.v2ex.com/member/guyskk](http://www.v2ex.com/member/guyskk)
-- Blog: [http://www.kkblog.me](http://www.kkblog.me)
+- Blog: [http://blog.guyskk.com](http://blog.guyskk.com)
