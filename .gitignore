@@ -1,6 +1,7 @@
 __pycache__
 .sass-cache
 _site
+/reveal
 
 # Windows image file caches
 Thumbs.db
