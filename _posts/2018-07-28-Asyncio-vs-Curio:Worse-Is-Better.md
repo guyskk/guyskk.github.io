@@ -1,5 +1,5 @@
 ---
-title: "Asyncio-vs-Curio: Worse-Is-Better法则"
+title: "Asyncio-vs-Curio: Worse-Is-Better"
 ---
 
 为什么设计良好的软件没能成为主流？
@@ -43,8 +43,8 @@ def syscall_wait_read(fd):
 >>>
 ```
 
-生成器是协程与内核的完美分界线，Curio 基于此实现用户态内核。
-Curio 提供的 socket API, 调度 API，同步原语等等都不直接依赖于内核，并且接口与现有的同步接口一致，
+`yield` 是协程与内核的完美分界线，Curio 基于此实现用户态内核。
+Curio 提供的 Socket API, 调度 API，同步原语等等都不直接依赖于内核，并且接口与现有的同步接口一致，
 学习成本非常低，也没有 Transport，Protocol，Flow Control 等复杂概念。
 
 从同步到异步，Curio 只提供一个入口，即 `run` 函数：
@@ -93,7 +93,7 @@ async def wait_read(fd):
 在 Asyncio 里 Future 与 EventLoop 是紧密耦合的，为了注册回调函数你必须先拿到 EventLoop 对象。
 为了避免到处传递 EventLoop，只能把 EventLoop 注册成全局变量（简单粗暴）。
 
-EventLoop 成了一个大杂烩，集所有功能于一身（实际上只实现了常用的功能），
+EventLoop 逐渐变成了一个大杂烩，集所有功能于一身（实际上只实现了常用的功能），
 只要有需求，什么功能都可以往上加。
 
 ## Worse Is Better
@@ -125,7 +125,7 @@ EventLoop 成了一个大杂烩，集所有功能于一身（实际上只实现�
 
 真实的软件里不一致处处可见，可能是疏忽大意造成的拼写错误，
 也可能为了支持新特性可能不得不增加几个格格不入的函数，还可能这个函数本来很一致，
-过了一段时间增加了很多不一致的函数，原本一致的函数反而显得不一致的。
+过了一段时间增加了很多不一致的函数，原本一致的函数反而显得不一致了。
 
 你肯定知道 Asyncio 的事件循环有 `run_forever` 和 `run_until_complete` 两个方法。
 为什么有两个，而且名字还这么长？
@@ -206,13 +206,7 @@ Newio 完全兼容 Asyncio，并且提供简洁的，一致的 API，大部分�
 一个解放生产力的异步IO Web框架，基于 Newio，完全兼容 Asyncio。  
 文档还未完善，推荐参考源码使用。
 
-### [蚁阅](http://rss.anyant.com/)
-
-我正在做的一个RSS阅读器（个人作品），还非常不完善，目前应该可以登录:P
-
-使用了 Weirb 框架和 Newio-Requests，数据库最初用的是 RethinkDB，现已迁移到 Postgres。
-
 ## 结束语
 
-如果你对上述项目感兴趣，欢迎与我联系，邮箱：`guyskk#qq.com`。  
-开源项目欢迎提 Issue 和 PR。  
+如果你对上述项目感兴趣，欢迎与我联系，我的邮箱：`guyskk#qq.com`。  
+也欢迎直接提 Issue 和 PR。
