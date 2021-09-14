@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: 关于我
 ---
 
 Hi，我是黄康德，网络 ID 是 guyskk。  
@@ -18,7 +18,7 @@ Hi，我是黄康德，网络 ID 是 guyskk。
 ### 联系方式
 
 - 微信: [guyskk](/static/about/guyskk-qrcode.jpg)
-- 公众号: [自由码虫](/static/about/anyant-qrcode.jpg)
+- 公众号: [自宅创业](/static/about/anyant-qrcode.jpg)
 - Email: guyskk@qq.com
 - Github: [https://github.com/guyskk](https://github.com/guyskk)  
 - V2EX: [https://www.v2ex.com/member/guyskk0x0](https://www.v2ex.com/member/guyskk0x0)
