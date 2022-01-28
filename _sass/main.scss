@@ -233,17 +233,23 @@ pre {
 table {
   width: 100%;
   table-layout: fixed;
-  margin: 45px 0;
-  thead {
-    background: #f2f2f2;
-  }
+  border-spacing: 0;
+  border-collapse: collapse;
+  overflow: auto;
   th {
-    text-align: left;
-    padding: 8px 10px;
-    border-bottom: 15px solid #fff;
+    font-weight: 600;
   }
-  td {
-    padding: 4px 0;
+  td,
+  th {
+    padding: 12px 24px;
+    border: 1px solid #dfe2e5;
+  }
+  tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+  }
+  tr:nth-child(2n) {
+    background-color: #f6f8fa;
   }
 }
 iframe {
