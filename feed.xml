@@ -7,12 +7,12 @@ layout: null
 
   <title>{{ site.title | xml_escape }}</title>
   <subtitle>{{ site.description | xml_escape }}</subtitle>
-  <link href="{{ site.baseurl }}/" rel="alternate"/>
-  <link href="{{ site.baseurl | append: '/feed.xml' }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ site.rooturl }}{{ site.baseurl }}/" rel="alternate"/>
+  <link href="{{ site.rooturl }}{{ site.baseurl | append: '/feed.xml' }}" rel="self" type="application/atom+xml"/>
   <rights>Copyright ©
     2015-{{ site.time | date: '%Y' }},
     {{ site.author_name | xml_escape }}</rights>
-  <icon>{{ site.baseurl }}/assets/favicon.png</icon>
+  <icon>{{ site.rooturl }}{{ site.baseurl }}/assets/favicon.png</icon>
 
   <author>
     <name>{{ site.author_name | xml_escape }}</name>
