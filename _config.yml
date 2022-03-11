@@ -10,6 +10,7 @@ twitter_username:   "__guyskk__"
 
 # Site Settings
 baseurl:            "" # Base URL must end WITHOUT a slash, default: ""
+rooturl:            "https://blog.guyskk.com"
 permalink:          /notes/:title # Post permalink
 timezone:           Asia/Shanghai # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
