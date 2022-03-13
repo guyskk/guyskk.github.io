@@ -17,7 +17,7 @@ layout: null
   <author>
     <name>{{ site.author_name | xml_escape }}</name>
     <email>{{ site.author_email | xml_escape }}</email>
-    <uri>https://twitter.com/{{ site.twitter_username }}</uri>
+    <uri>{{ site.rooturl }}/about</uri>
   </author>
 
   <updated>{{ site.time | date_to_xmlschema }}</updated>
@@ -33,6 +33,7 @@ layout: null
   <entry>
     <title type="html">{{ post.title | xml_escape }}</title>
     <id>{{ post.url | prepend: site.baseurl }}</id>
+    <link rel="alternate" type="text/html" href="{{ post.url | prepend: site.baseurl }}"/>
     <updated>{{ post.date | date_to_xmlschema }}</updated>
     <published>{{ post.path | truncate: 20 | replace: "...", "" | replace: "_posts/", "" }}T10:00:00+02:00</published>
     <content type="html" xml:lang="en">
