@@ -33,7 +33,7 @@ layout: null
   <entry>
     <title type="html">{{ post.title | xml_escape }}</title>
     <id>{{ post.url | prepend: site.baseurl }}</id>
-    <link rel="alternate" type="text/html" href="{{ post.url | prepend: site.baseurl }}"/>
+    <link rel="alternate" type="text/html" href="{{ post.url | prepend: site.baseurl | prepend: site.rooturl }}"/>
     <updated>{{ post.date | date_to_xmlschema }}</updated>
     <published>{{ post.path | truncate: 20 | replace: "...", "" | replace: "_posts/", "" }}T10:00:00+02:00</published>
     <content type="html" xml:lang="en">
