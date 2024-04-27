@@ -20,11 +20,22 @@ kramdown:
     input:          GFM
     hard_wrap: false
 sass:
-    style:          :compressed
+    style:          compressed
 
 # Other Params
 include:            [ "robots.txt" ]
-exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile" ]
+exclude:            [
+  "LICENSE", 
+  "README.md", 
+  "CNAME", 
+  "vendor", 
+  "Gemfile",
+  "tmp",
+  "node_modules",
+  "package.json",
+  "package-lock.json",
+  "deploy.sh",
+]
 plugins:
   - jekyll-sitemap
 
@@ -41,11 +52,13 @@ defaults:
       layout:       "null"
   -
     scope:
+      path:         ""
       type:         "pages"
     values:
       layout:       "page"
   -
     scope:
+      path:         ""
       type:         "posts"
     values:
       layout:       "post"

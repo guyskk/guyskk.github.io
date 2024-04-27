@@ -17,8 +17,8 @@ RSS 的前景和创业问题，一起探讨了独立开发这件事，我也分�
 **直接播放**:
 
 <audio controls preload style="width:80%;margin-left:34px">
-    <source src="/static/2020-07-12/podcast-rssant-parttime-product.mp3?controls=1" type="audio/mpeg" />
-    <p>你的浏览器不支持播放音频，你可以<a href="/static/2020-07-12/podcast-rssant-parttime-product.mp3?controls=1">下载</a>这个音频文件。</p>
+    <source src="https://blog-static.guyskk.com/2020-07-12/podcast-rssant-parttime-product.mp3?controls=1" type="audio/mpeg" />
+    <p>你的浏览器不支持播放音频，你可以<a href="https://blog-static.guyskk.com/2020-07-12/podcast-rssant-parttime-product.mp3?controls=1">下载</a>这个音频文件。</p>
 </audio>
 
 **拓展链接**:
