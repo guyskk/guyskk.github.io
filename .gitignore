@@ -2,6 +2,9 @@ __pycache__
 .sass-cache
 _site
 /reveal
+tmp/
+node_modules/
+.wrangler/
 
 # Windows image file caches
 Thumbs.db
