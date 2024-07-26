@@ -12,7 +12,7 @@ layout: null
   <rights>Copyright ©
     2015-{{ site.time | date: '%Y' }},
     {{ site.author_name | xml_escape }}</rights>
-  <icon>{{ site.rooturl }}{{ site.baseurl }}/assets/favicon.png</icon>
+  <icon>{{ site.rooturl }}{{ site.baseurl }}/assets/logo.png</icon>
 
   <author>
     <name>{{ site.author_name | xml_escape }}</name>
