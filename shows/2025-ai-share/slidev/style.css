@@ -1,0 +1,14 @@
+/* ===== 统一设置所有幻灯片页面的背景色 ===== */
+.slidev-page,
+.slidev-layout {
+  padding-bottom: 20px;
+  background: #FFF9E6 !important;
+  color: #1f2937 !important;
+  font-family: "Helvetica", "Arial", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif";
+
+  h1,
+  h2,
+  h3 {
+    margin-top: 24px;
+  }
+}
