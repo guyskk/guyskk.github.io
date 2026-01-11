@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>坦克大战 - Tank Battle Arena</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="gameHeader">
+            <h1>🎮 坦克大战 <span style="font-size: 0.6em; color: #ffd700;">Tank Battle Arena</span></h1>
+            <div id="gameStatus">
+                <div class="status-panel player-panel">
+                    <div class="panel-label">玩家</div>
+                    <div class="health-bar">
+                        <div id="playerHealthBar" class="health-fill player-health"></div>
+                    </div>
+                    <div id="playerScore" class="score">分数: 0</div>
+                </div>
+                <div class="status-panel vs-panel">
+                    <div class="vs-text">VS</div>
+                </div>
+                <div class="status-panel ai-panel">
+                    <div class="panel-label">AI对手</div>
+                    <div class="health-bar">
+                        <div id="aiHealthBar" class="health-fill ai-health"></div>
+                    </div>
+                    <div id="aiScore" class="score">分数: 0</div>
+                </div>
+            </div>
+        </div>
+        <div id="canvasContainer">
+            <canvas id="gameCanvas"></canvas>
+            <div id="startScreen" class="overlay">
+                <div class="overlay-content">
+                    <h2 class="game-title">🎯 坦克大战</h2>
+                    <p class="subtitle">Tactical Tank Combat</p>
+                    <div class="controls-info">
+                        <div class="control-group">
+                            <div class="control-item">
+                                <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span>
+                                <span class="control-desc">移动坦克</span>
+                            </div>
+                            <div class="control-item">
+                                <span class="key">鼠标</span>
+                                <span class="control-desc">瞄准炮塔</span>
+                            </div>
+                            <div class="control-item">
+                                <span class="key">左键</span><span class="key">空格</span>
+                                <span class="control-desc">发射炮弹</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="startBtn" class="start-btn">开始战斗</button>
+                    <div class="difficulty-selector">
+                        <span>AI难度:</span>
+                        <button class="diff-btn active" data-diff="easy">简单</button>
+                        <button class="diff-btn" data-diff="normal">普通</button>
+                        <button class="diff-btn" data-diff="hard">困难</button>
+                        <button class="diff-btn" data-diff="expert">专家</button>
+                    </div>
+                </div>
+            </div>
+            <div id="gameOverScreen" class="overlay hidden">
+                <div class="overlay-content">
+                    <h2 id="winnerText" class="winner-title"></h2>
+                    <p id="finalScore" class="final-score"></p>
+                    <button id="restartBtn" class="start-btn">再来一局</button>
+                </div>
+            </div>
+        </div>
+        <div id="gameInfo">
+            <div class="info-item">
+                <span class="info-icon">🧱</span>
+                <span class="info-text">砖墙可破坏</span>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">🔩</span>
+                <span class="info-text">钢墙不可破坏</span>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">🎯</span>
+                <span class="info-text">利用掩体战术</span>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
