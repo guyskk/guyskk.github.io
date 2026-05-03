@@ -5,6 +5,7 @@ _site
 tmp/
 node_modules/
 .wrangler/
+vendor/bundle/
 
 # Windows image file caches
 Thumbs.db
