@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
-jekyll build
+bundle exec jekyll build
 npx wrangler pages deploy --project-name guyskk-blog ./_site

@@ -30,6 +30,7 @@ exclude:            [
   "CNAME",
   "vendor",
   "Gemfile",
+  "Gemfile.lock",
   "tmp",
   "node_modules",
   "shows/**/node_modules",
@@ -40,6 +41,8 @@ exclude:            [
   "package.json",
   "package-lock.json",
   "deploy.sh",
+  "setup.sh",
+  "serve.sh",
 ]
 plugins:
   - jekyll-sitemap
