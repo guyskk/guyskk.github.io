@@ -5,14 +5,14 @@ title: "AI 编程=控制系统：BeecodeAI 的设计原理"
 #### BeecodeAI APP 完整介绍
 
 <video
-  src="/static/2026-06-27/beecodeai-intro.mp4"
+  src="https://blog-static.guyskk.com/2026-06-27/beecodeai-intro.mp4"
   poster="/static/2026-06-27/beecodeai-intro-poster.jpg"
   controls
   preload="none"
   playsinline
   width="540"
   height="1200">
-  您的浏览器不支持 HTML5 视频播放，请 <a href="/static/2026-06-27/beecodeai-intro.mp4">下载视频</a> 观看。
+  您的浏览器不支持 HTML5 视频播放，请 <a href="https://blog-static.guyskk.com/2026-06-27/beecodeai-intro.mp4">下载视频</a> 观看。
 </video>
 
 ---
